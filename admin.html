@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QR 코드 생성 (관리자용)</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="card">
+  <h1>스테이지 QR 코드</h1>
+  <p class="subtitle">인쇄해서 각 방/자물쇠 옆에 붙여두세요</p>
+  <div class="stage-list" id="stage-list"></div>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+  const listEl = document.getElementById("stage-list");
+  const baseURL = window.location.origin + window.location.pathname.replace("admin.html", "index.html");
+
+  Object.entries(STAGES).forEach(([id, stage]) => {
+    const url = `${baseURL}?stage=${encodeURIComponent(id)}`;
+    const qrImgSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
+
+    const item = document.createElement("div");
+    item.className = "stage-item";
+    item.innerHTML = `
+      <h2>${stage.title} (stage=${id})</h2>
+      <img src="${qrImgSrc}" alt="QR code for stage ${id}" width="220" height="220" />
+      <div class="url">${url}</div>
+    `;
+    listEl.appendChild(item);
+  });
+</script>
+</body>
+</html>
