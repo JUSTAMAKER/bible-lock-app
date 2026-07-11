@@ -80,13 +80,9 @@ function init() {
       await sleep(750);
     }
 
-    els.arrowStage.textContent = "✅";
-    arrows.forEach((dir) => {
-      const span = document.createElement("span");
-      span.className = "arrow-chip";
-      span.textContent = ARROW_SYMBOL[dir];
-      els.arrowSequence.appendChild(span);
-    });
+    els.arrowStage.hidden = true;
+    els.arrowStage.textContent = "";
+    els.arrowSequence.innerHTML = "";
 
     revealing = false;
     els.submitBtn.disabled = false;
