@@ -1,0 +1,200 @@
+:root {
+  --paper: #f5f0e3;
+  --paper-edge: #e7ddc6;
+  --ink: #2b2620;
+  --muted: #6f6a5c;
+  --red: #9c2b2b;
+  --red-soft: #fbeeee;
+  --rule: #cfc7ac;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.eden {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ece4d0 0%, #e3d9bf 100%);
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: var(--ink);
+  display: flex;
+  justify-content: center;
+  padding: 28px 16px 60px;
+}
+
+.doc {
+  width: 100%;
+  max-width: 480px;
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  border-radius: 6px;
+  padding: 26px 22px 30px;
+  box-shadow: 0 18px 40px rgba(30, 22, 10, 0.25);
+  position: relative;
+}
+
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.doc-title {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.doc-subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.badge {
+  flex-shrink: 0;
+  border: 1.5px solid var(--red);
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.doc-meta {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+.rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 16px 0;
+}
+
+.rule.thick {
+  border-top: 2px solid var(--ink);
+}
+
+.doc-body p {
+  font-size: 14.5px;
+  line-height: 1.75;
+  margin: 0 0 14px;
+}
+
+.puzzle-frame {
+  margin: 22px 0 10px;
+  border: 1px solid var(--rule);
+  background: #ece4d1;
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+}
+
+.puzzle-frame .label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.puzzle-stage {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.puzzle-stage svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  touch-action: none;
+}
+
+.glow-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.puzzle-stage.solved .glow-overlay {
+  animation: glowPulse 1.6s ease-out forwards;
+}
+
+@keyframes glowPulse {
+  0% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(200, 30, 30, 0.0);
+  }
+  35% {
+    opacity: 1;
+    box-shadow: 0 0 60px 30px rgba(200, 30, 30, 0.55);
+  }
+  100% {
+    opacity: 0.85;
+    box-shadow: 0 0 90px 40px rgba(200, 30, 30, 0.35);
+  }
+}
+
+.hint {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.reveal-note {
+  margin-top: 22px;
+  border: 1.5px dashed var(--red);
+  border-radius: 6px;
+  padding: 16px 16px;
+  background: var(--red-soft);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.8s ease, max-height 0.8s ease;
+}
+
+.reveal-note.show {
+  opacity: 1;
+  max-height: 400px;
+}
+
+.reveal-note h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--red);
+}
+
+.reveal-note p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #5a1414;
+  line-height: 1.7;
+}
+
+.reveal-verse {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--red);
+  text-align: center;
+  margin: 10px 0 !important;
+  letter-spacing: 0.5px;
+}
+
+.doc-footer {
+  margin-top: 26px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.8;
+}
