@@ -17,20 +17,31 @@
 <script src="js/config.js"></script>
 <script>
   const listEl = document.getElementById("stage-list");
-  const baseURL = window.location.origin + window.location.pathname.replace("admin.html", "index.html");
+  const siteRoot = window.location.origin + window.location.pathname.replace("admin.html", "");
 
-  Object.entries(STAGES).forEach(([id, stage]) => {
-    const url = `${baseURL}?stage=${encodeURIComponent(id)}`;
+  const EXTRA_PAGES = [
+    { title: "떡 조각 복원 퍼즐 (최후의 만찬)", path: "bread-puzzle.html" },
+  ];
+
+  function addQRItem(title, url) {
     const qrImgSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
-
     const item = document.createElement("div");
     item.className = "stage-item";
     item.innerHTML = `
-      <h2>${stage.title} (stage=${id})</h2>
-      <img src="${qrImgSrc}" alt="QR code for stage ${id}" width="220" height="220" />
+      <h2>${title}</h2>
+      <img src="${qrImgSrc}" alt="QR code for ${title}" width="220" height="220" />
       <div class="url">${url}</div>
     `;
     listEl.appendChild(item);
+  }
+
+  Object.entries(STAGES).forEach(([id, stage]) => {
+    const url = `${siteRoot}index.html?stage=${encodeURIComponent(id)}`;
+    addQRItem(`${stage.title} (stage=${id})`, url);
+  });
+
+  EXTRA_PAGES.forEach(({ title, path }) => {
+    addQRItem(title, `${siteRoot}${path}`);
   });
 </script>
 </body>
