@@ -186,22 +186,8 @@
       pieces.push(piece);
       setSpin(piece, false);
 
-      attachDrag(piece);
+      attachTap(piece);
     }
-  }
-
-  function pieceAtSlot(slot) {
-    return pieces.find((p) => p.slot === slot);
-  }
-
-  function angleToSlot(clientX, clientY) {
-    const rect = svg.getBoundingClientRect();
-    const scale = 400 / rect.width;
-    const x = (clientX - rect.left) * scale - CX;
-    const y = (clientY - rect.top) * scale - CY;
-    let deg = (Math.atan2(y, x) * 180) / Math.PI + 90;
-    if (deg < 0) deg += 360;
-    return Math.floor(deg / ANGLE) % N;
   }
 
   function checkWin() {
@@ -225,64 +211,43 @@
     }, 900);
   }
 
-  function attachDrag(piece) {
-    let dragging = false;
-    let highlighted = null;
+  let selected = null;
 
-    piece.group.style.cursor = "grab";
-
-    piece.group.addEventListener("pointerdown", (e) => {
-      if (solved) return;
-      dragging = true;
-      piece.group.setPointerCapture(e.pointerId);
-      piece.group.style.cursor = "grabbing";
-      svg.appendChild(piece.group); // bring to front
-      piece.spin.style.transition = "none";
-      piece.spin.style.filter = "drop-shadow(0 0 6px rgba(0,0,0,0.5))";
-    });
-
-    piece.group.addEventListener("pointermove", (e) => {
-      if (!dragging) return;
-      const targetSlot = angleToSlot(e.clientX, e.clientY);
-      const targetPiece = pieceAtSlot(targetSlot);
-      if (highlighted && highlighted !== targetPiece) {
-        highlighted.spin.style.opacity = "1";
-      }
-      if (targetPiece && targetPiece !== piece) {
-        targetPiece.spin.style.opacity = "0.6";
-        highlighted = targetPiece;
-      } else {
-        highlighted = null;
-      }
-    });
-
-    function endDrag(e) {
-      if (!dragging) return;
-      dragging = false;
-      piece.group.style.cursor = "grab";
-      piece.spin.style.filter = "";
-      if (highlighted) {
-        highlighted.spin.style.opacity = "1";
-      }
-
-      const targetSlot = angleToSlot(e.clientX, e.clientY);
-      const targetPiece = pieceAtSlot(targetSlot);
-
-      if (targetPiece && targetPiece !== piece) {
-        const tmp = piece.slot;
-        piece.slot = targetPiece.slot;
-        targetPiece.slot = tmp;
-        setSpin(piece, true);
-        setSpin(targetPiece, true);
-        checkWin();
-      } else {
-        setSpin(piece, true);
-      }
-      highlighted = null;
+  function setSelected(piece) {
+    if (selected) {
+      selected.spin.style.filter = "";
     }
+    selected = piece;
+    if (selected) {
+      selected.spin.style.filter = "drop-shadow(0 0 8px rgba(255,255,255,0.9))";
+    }
+  }
 
-    piece.group.addEventListener("pointerup", endDrag);
-    piece.group.addEventListener("pointercancel", endDrag);
+  function attachTap(piece) {
+    piece.group.style.cursor = "pointer";
+
+    piece.group.addEventListener("click", () => {
+      if (solved) return;
+
+      if (!selected) {
+        setSelected(piece);
+        return;
+      }
+
+      if (selected === piece) {
+        setSelected(null);
+        return;
+      }
+
+      const other = selected;
+      const tmp = piece.slot;
+      piece.slot = other.slot;
+      other.slot = tmp;
+      setSpin(piece, true);
+      setSpin(other, true);
+      setSelected(null);
+      checkWin();
+    });
   }
 
   buildDefs();
