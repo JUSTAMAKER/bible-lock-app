@@ -1,0 +1,131 @@
+.lock-wrap {
+  position: relative;
+  width: 240px;
+  height: 300px;
+  margin: 18px auto 8px;
+}
+
+.shackle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 110px;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease;
+  transform-origin: 20% 100%;
+}
+
+.lock-wrap.open .shackle {
+  transform: translateX(-50%) translateY(-14px) rotate(-28deg);
+}
+
+.lock-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #ff7a7a 0%, #c22a2a 45%, #7c1414 100%);
+  box-shadow:
+    inset 0 -14px 26px rgba(0, 0, 0, 0.45),
+    inset 0 10px 18px rgba(255, 255, 255, 0.25),
+    0 14px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dial-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #ff9a9a 0%, #b5201f 65%, #7a1010 100%);
+  box-shadow:
+    inset 0 8px 14px rgba(255, 255, 255, 0.3),
+    inset 0 -10px 16px rgba(0, 0, 0, 0.45);
+}
+
+.dir-btn {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border: none;
+  background: transparent;
+  color: #1c1c1c;
+  font-size: 22px;
+  line-height: 46px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dir-btn:active {
+  transform: scale(0.85);
+}
+
+.dir-up {
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dir-up:active {
+  transform: translateX(-50%) scale(0.85);
+}
+
+.dir-down {
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dir-down:active {
+  transform: translateX(-50%) scale(0.85);
+}
+
+.dir-left {
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dir-left:active {
+  transform: translateY(-50%) scale(0.85);
+}
+
+.dir-right {
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dir-right:active {
+  transform: translateY(-50%) scale(0.85);
+}
+
+.pips {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 14px 0 4px;
+}
+
+.pip {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #2a2f52;
+  border: 2px solid #454b7a;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.pip.filled {
+  background: var(--accent, #f5c542);
+  border-color: var(--accent, #f5c542);
+  transform: scale(1.15);
+}
+
+.lock-wrap.shake {
+  animation: shake 0.4s;
+}

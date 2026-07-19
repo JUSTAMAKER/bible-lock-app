@@ -40,6 +40,11 @@
     addQRItem(`${stage.title} (stage=${id})`, url);
   });
 
+  Object.entries(STAGES).forEach(([id, stage]) => {
+    const url = `${siteRoot}direction-lock.html?stage=${encodeURIComponent(id)}`;
+    addQRItem(`${stage.title} - 방향 입력형 자물쇠 (stage=${id})`, url);
+  });
+
   EXTRA_PAGES.forEach(({ title, path }) => {
     addQRItem(title, `${siteRoot}${path}`);
   });
