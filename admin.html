@@ -42,6 +42,7 @@
   });
 
   Object.entries(STAGES).forEach(([id, stage]) => {
+    if (!stage.skipVerseApp) return; // 비밀번호(index.html)를 거쳐 자동으로 넘어가는 스테이지는 별도 QR이 필요 없음
     const url = `${siteRoot}direction-lock.html?stage=${encodeURIComponent(id)}`;
     addQRItem(`${stage.title} - 방향 입력형 자물쇠 (stage=${id})`, url);
   });
