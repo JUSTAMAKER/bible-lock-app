@@ -20,6 +20,11 @@ function getStageIdFromURL() {
 function findMatchingArrows(stage, inputText) {
   const normalizedInput = normalize(inputText);
   if (!normalizedInput) return null;
+
+  if (stage.password) {
+    return normalizedInput === normalize(stage.password) ? stage.verses[0].arrows : null;
+  }
+
   for (const verse of stage.verses) {
     for (const ref of verse.refs) {
       if (normalize(ref) === normalizedInput) {
@@ -33,6 +38,8 @@ function findMatchingArrows(stage, inputText) {
 function init() {
   const els = {
     title: document.getElementById("stage-title"),
+    subtitle: document.getElementById("stage-subtitle"),
+    hint: document.getElementById("stage-hint"),
     form: document.getElementById("verse-form"),
     input: document.getElementById("verse-input"),
     submitBtn: document.getElementById("submit-btn"),
@@ -53,7 +60,17 @@ function init() {
     return;
   }
 
+  const passwordMode = Boolean(stage.password);
+
   els.title.textContent = stage.title;
+
+  if (passwordMode) {
+    els.subtitle.textContent = "비밀번호를 입력하세요";
+    els.input.placeholder = "비밀번호 입력";
+    els.input.setAttribute("inputmode", "numeric");
+    els.hint.textContent = "정답을 입력하면 방향 자물쇠 화면으로 자동 이동합니다";
+  }
+
   let lastArrows = null;
   let revealing = false;
 
@@ -101,7 +118,7 @@ function init() {
     }
   }
 
-  els.form.addEventListener("submit", (e) => {
+  els.form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (revealing) return;
 
@@ -112,14 +129,20 @@ function init() {
       lastArrows = arrows;
       setMessage("정답입니다! 화살표를 순서대로 확인하세요.", "success");
       els.replayBtn.hidden = true;
-      revealArrows(arrows);
+      await revealArrows(arrows);
+
+      if (passwordMode) {
+        setMessage("방향 자물쇠 화면으로 이동합니다...", "success");
+        await sleep(1200);
+        window.location.href = `direction-lock.html?stage=${encodeURIComponent(stageId)}`;
+      }
     } else {
       lastArrows = null;
       els.arrowStage.hidden = true;
       els.arrowSequence.innerHTML = "";
       els.replayBtn.hidden = true;
       safeSound(() => SoundFX.playError());
-      setMessage("오답입니다. 구절을 다시 확인해보세요.", "error");
+      setMessage(passwordMode ? "오답입니다. 비밀번호를 다시 확인해보세요." : "오답입니다. 구절을 다시 확인해보세요.", "error");
       els.puzzleCard.classList.remove("shake");
       void els.puzzleCard.offsetWidth;
       els.puzzleCard.classList.add("shake");

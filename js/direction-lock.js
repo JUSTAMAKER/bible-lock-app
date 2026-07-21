@@ -17,6 +17,7 @@ function init() {
     lockWrap: document.getElementById("lock-wrap"),
     pips: document.getElementById("pips"),
     message: document.getElementById("message"),
+    phoneReveal: document.getElementById("phone-reveal"),
     lockCard: document.getElementById("lock-card"),
     notFound: document.getElementById("not-found"),
   };
@@ -70,6 +71,11 @@ function init() {
     els.lockWrap.classList.add("open");
     safeSound(() => SoundFX.playSuccess());
     setMessage(stage.openMessage || "잠금 해제!", "success");
+
+    if (stage.revealPhone) {
+      els.phoneReveal.textContent = "📞 " + stage.revealPhone;
+      els.phoneReveal.hidden = false;
+    }
   }
 
   document.querySelectorAll(".dir-btn").forEach((btn) => {

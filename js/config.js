@@ -4,8 +4,11 @@
 //
 // - key: URL에 붙는 스테이지 번호 (예: ?stage=1)
 // - title: 화면 상단에 표시될 제목
+// - password: (선택) 값을 넣으면 index.html이 성경구절 입력 대신 비밀번호 입력 화면으로 바뀝니다.
+//             정답 비밀번호를 입력하면 화살표를 보여준 뒤 자동으로 direction-lock.html로 이동합니다.
 // - openMessage: direction-lock.html에서 자물쇠가 열렸을 때 보여줄 문구 (선택, 없으면 기본 문구 사용)
-// - verses: 정답으로 인정할 구절들의 목록
+// - revealPhone: (선택) direction-lock.html에서 자물쇠가 열렸을 때 화면에 표시할 전화번호
+// - verses: 정답으로 인정할 구절들의 목록 (password가 없는 스테이지에서 사용)
 //     - refs: 같은 구절을 표기하는 여러 방식(오타/축약 포함)을 배열로 등록
 //             입력값과 refs 중 하나라도 일치하면 정답 처리됩니다.
 //             (공백/대소문자/일부 문장부호는 자동으로 무시되고 비교됩니다)
@@ -17,7 +20,9 @@
 const STAGES = {
   "1": {
     title: "첫 번째 자물쇠",
-    openMessage: "잠금 해제! 다음 장소로 이동하세요.",
+    password: "0925",
+    openMessage: "잠금 해제!",
+    revealPhone: "010-1234-5678",
     verses: [
       {
         refs: ["요한복음 3:16", "요 3:16", "요3:16", "요한복음3장16절"],

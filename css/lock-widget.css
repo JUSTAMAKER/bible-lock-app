@@ -129,3 +129,12 @@
 .lock-wrap.shake {
   animation: shake 0.4s;
 }
+
+.phone-reveal {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent, #f5c542);
+  text-align: center;
+  margin: 4px 0 14px;
+  letter-spacing: 0.5px;
+}
