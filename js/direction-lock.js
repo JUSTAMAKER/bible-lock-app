@@ -18,6 +18,12 @@ function init() {
     pips: document.getElementById("pips"),
     message: document.getElementById("message"),
     phoneReveal: document.getElementById("phone-reveal"),
+    videoReveal: document.getElementById("video-reveal"),
+    lockSubtitle: document.getElementById("lock-subtitle"),
+    puzzleContent: document.getElementById("puzzle-content"),
+    finalReveal: document.getElementById("final-reveal"),
+    finalTitle: document.getElementById("final-title"),
+    finalCode: document.getElementById("final-code"),
     lockCard: document.getElementById("lock-card"),
     notFound: document.getElementById("not-found"),
   };
@@ -70,12 +76,59 @@ function init() {
     opened = true;
     els.lockWrap.classList.add("open");
     safeSound(() => SoundFX.playSuccess());
+
+    if (stage.reveal && stage.reveal.type === "videos") {
+      setMessage("잠금 해제!", "success");
+      showVideoReveal(stage.reveal);
+      return;
+    }
+
     setMessage(stage.openMessage || "잠금 해제!", "success");
 
     if (stage.revealPhone) {
       els.phoneReveal.textContent = "📞 " + stage.revealPhone;
       els.phoneReveal.hidden = false;
     }
+  }
+
+  function showVideoReveal(reveal) {
+    els.videoReveal.hidden = false;
+    let endedCount = 0;
+
+    reveal.videos.forEach((v) => {
+      const block = document.createElement("div");
+      block.className = "video-block";
+
+      const label = document.createElement("p");
+      label.className = "video-label";
+      label.textContent = v.label;
+
+      const video = document.createElement("video");
+      video.className = "reveal-video";
+      video.src = v.src;
+      video.controls = true;
+      video.playsInline = true;
+
+      video.addEventListener("ended", () => {
+        endedCount++;
+        if (endedCount === reveal.videos.length) {
+          showFinalReveal(reveal);
+        }
+      });
+
+      block.appendChild(label);
+      block.appendChild(video);
+      els.videoReveal.appendChild(block);
+    });
+  }
+
+  function showFinalReveal(reveal) {
+    els.puzzleContent.hidden = true;
+    els.lockSubtitle.hidden = true;
+    els.finalTitle.textContent = reveal.finalTitle;
+    els.finalCode.textContent = reveal.finalCode;
+    els.finalReveal.hidden = false;
+    safeSound(() => SoundFX.playSuccess());
   }
 
   document.querySelectorAll(".dir-btn").forEach((btn) => {

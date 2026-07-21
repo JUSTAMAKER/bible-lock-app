@@ -36,6 +36,7 @@
   }
 
   Object.entries(STAGES).forEach(([id, stage]) => {
+    if (stage.skipVerseApp) return;
     const url = `${siteRoot}index.html?stage=${encodeURIComponent(id)}`;
     addQRItem(`${stage.title} (stage=${id})`, url);
   });

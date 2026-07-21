@@ -138,3 +138,48 @@
   margin: 4px 0 14px;
   letter-spacing: 0.5px;
 }
+
+.video-reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 14px 0 6px;
+}
+
+.video-block .video-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent, #f5c542);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.reveal-video {
+  width: 100%;
+  border-radius: 10px;
+  background: #000;
+  display: block;
+}
+
+.final-reveal {
+  text-align: center;
+  padding: 30px 10px 10px;
+}
+
+.final-reveal h2 {
+  font-size: 24px;
+  color: var(--accent, #f5c542);
+  margin: 0 0 18px;
+  letter-spacing: 1px;
+}
+
+.final-code {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: #fff;
+  background: #12142c;
+  border-radius: 14px;
+  padding: 18px;
+  margin: 0;
+}

@@ -11,42 +11,51 @@
 
 <div class="card" id="lock-card">
   <h1 id="stage-title">자물쇠</h1>
-  <p class="subtitle">알아낸 방향을 순서대로 눌러 자물쇠를 여세요</p>
+  <p class="subtitle" id="lock-subtitle">알아낸 방향을 순서대로 눌러 자물쇠를 여세요</p>
 
-  <div class="lock-wrap" id="lock-wrap">
-    <svg class="shackle" viewBox="0 0 140 110" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M25,108 L25,55 A45,45 0 0 1 115,55 L115,108"
-        fill="none"
-        stroke="url(#shackleGradient)"
-        stroke-width="18"
-        stroke-linecap="round"
-      />
-      <defs>
-        <linearGradient id="shackleGradient" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#d8dde6" />
-          <stop offset="45%" stop-color="#f4f7fb" />
-          <stop offset="55%" stop-color="#aab1bd" />
-          <stop offset="100%" stop-color="#e3e7ee" />
-        </linearGradient>
-      </defs>
-    </svg>
-    <div class="lock-body">
-      <div class="dial-center"></div>
-      <button class="dir-btn dir-up" data-dir="up" aria-label="위">▲</button>
-      <button class="dir-btn dir-left" data-dir="left" aria-label="왼쪽">◀</button>
-      <button class="dir-btn dir-right" data-dir="right" aria-label="오른쪽">▶</button>
-      <button class="dir-btn dir-down" data-dir="down" aria-label="아래">▼</button>
+  <div id="puzzle-content">
+    <div class="lock-wrap" id="lock-wrap">
+      <svg class="shackle" viewBox="0 0 140 110" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M25,108 L25,55 A45,45 0 0 1 115,55 L115,108"
+          fill="none"
+          stroke="url(#shackleGradient)"
+          stroke-width="18"
+          stroke-linecap="round"
+        />
+        <defs>
+          <linearGradient id="shackleGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#d8dde6" />
+            <stop offset="45%" stop-color="#f4f7fb" />
+            <stop offset="55%" stop-color="#aab1bd" />
+            <stop offset="100%" stop-color="#e3e7ee" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="lock-body">
+        <div class="dial-center"></div>
+        <button class="dir-btn dir-up" data-dir="up" aria-label="위">▲</button>
+        <button class="dir-btn dir-left" data-dir="left" aria-label="왼쪽">◀</button>
+        <button class="dir-btn dir-right" data-dir="right" aria-label="오른쪽">▶</button>
+        <button class="dir-btn dir-down" data-dir="down" aria-label="아래">▼</button>
+      </div>
     </div>
+
+    <div class="pips" id="pips"></div>
+
+    <p class="message" id="message"></p>
+
+    <p class="phone-reveal" id="phone-reveal" hidden></p>
+
+    <div class="video-reveal" id="video-reveal" hidden></div>
+
+    <p class="hint">방향 버튼을 눌러 정답 순서를 입력하세요. 틀리면 처음부터 다시 입력합니다.</p>
   </div>
 
-  <div class="pips" id="pips"></div>
-
-  <p class="message" id="message"></p>
-
-  <p class="phone-reveal" id="phone-reveal" hidden></p>
-
-  <p class="hint">방향 버튼을 눌러 정답 순서를 입력하세요. 틀리면 처음부터 다시 입력합니다.</p>
+  <div class="final-reveal" id="final-reveal" hidden>
+    <h2 id="final-title"></h2>
+    <p class="final-code" id="final-code"></p>
+  </div>
 </div>
 
 <div class="card" id="not-found" hidden>
